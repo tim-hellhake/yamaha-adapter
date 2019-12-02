@@ -45,7 +45,7 @@
       "properties": {
         "pollInterval": {
           "type": "integer",
-          "title": "The number of between two poll intervals"
+          "title": "The number of milliseconds between two poll intervals"
         }
       }
     }
