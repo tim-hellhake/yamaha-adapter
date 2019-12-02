@@ -136,7 +136,7 @@ class YamahaDevice extends Device {
   constructor(adapter: Adapter, private yamaha: Yamaha, deviceInfo: DeviceInfo, features: Features) {
     super(adapter, `yamaha-${deviceInfo.device_id}`);
     this['@context'] = 'https://iot.mozilla.org/schemas/';
-    this['@type'] = ['MultiLevelSensor'];
+    this['@type'] = ['MultiLevelSwitch'];
     this.name = deviceInfo.device_id;
 
     const zones = features.zone || [];
