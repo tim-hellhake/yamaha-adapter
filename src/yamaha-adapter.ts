@@ -157,19 +157,19 @@ class YamahaDevice extends Device {
     this.artistProperty = new ArtistProperty(this);
     this.properties.set(this.artistProperty.name, this.artistProperty);
 
-    this.addCallbackAction('play', 'Start the yamaha', () => {
+    this.addCallbackAction('play', 'Continue the playback', () => {
       this.yamaha.setPlayback('play');
     });
 
-    this.addCallbackAction('pause', 'Start the yamaha', () => {
+    this.addCallbackAction('pause', 'Pause the playback', () => {
       this.yamaha.setPlayback('pause');
     });
 
-    this.addCallbackAction('previous', 'Start the yamaha', () => {
+    this.addCallbackAction('previous', 'Jump to the previous track', () => {
       this.yamaha.setPlayback('previous');
     });
 
-    this.addCallbackAction('next', 'Start the yamaha', () => {
+    this.addCallbackAction('next', 'Jump to the next track', () => {
       this.yamaha.setPlayback('next');
     });
   }
