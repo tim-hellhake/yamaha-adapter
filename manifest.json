@@ -3,7 +3,7 @@
   "id": "yamaha-adapter",
   "name": "Yamaha",
   "short_name": "Yamaha",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Connect your yamaha audio devices",
   "homepage_url": "https://github.com/tim-hellhake/yamaha-adapter#readme",
   "license": "MPL-2.0",

@@ -1,7 +1,7 @@
 {
   "name": "yamaha-adapter",
   "display_name": "Yamaha",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Connect your yamaha audio devices",
   "main": "lib/index.js",
   "scripts": {
