@@ -10,6 +10,35 @@ import { Adapter, Device, Property } from 'gateway-addon';
 import { DeviceInfo, Features, Yamaha, RangeStepEntity, Status, PlayInfo } from './yamaha';
 import { discovery } from './discovery';
 
+class PowerProperty extends Property {
+  constructor(private device: Device, private yamaha: Yamaha) {
+    super(device, 'power', {
+      type: 'boolean',
+      title: 'power',
+      description: 'Whether the device is powered on'
+    })
+  }
+
+  async setValue(value: boolean) {
+    try {
+      console.log(`Set value of ${this.device.name} / ${this.title} to ${value}`);
+      await super.setValue(value);
+      const power = value ? 'on' : 'standby';
+      const response = await this.yamaha.setPower(power);
+      console.log(JSON.stringify(response));
+    } catch (e) {
+      console.log(`Could not set value: ${e}`);
+    }
+  }
+
+  public update(status: Status) {
+    if (this.value !== status.power) {
+      this.setCachedValue(status.power == 'on');
+      this.device.notifyPropertyChanged(this);
+    }
+  }
+}
+
 class VolumeProperty extends Property {
   constructor(private device: Device, private yamaha: Yamaha, rangeStep?: RangeStepEntity) {
     super(device, 'volume', {
@@ -127,6 +156,7 @@ class ArtistProperty extends Property {
 
 class YamahaDevice extends Device {
   private callbacks: { [name: string]: () => void } = {};
+  private powerProperty: PowerProperty;
   private volumeProperty: VolumeProperty;
   private inputProperty: InputProperty;
   private trackProperty: TrackProperty;
@@ -138,6 +168,9 @@ class YamahaDevice extends Device {
     this['@context'] = 'https://iot.mozilla.org/schemas/';
     this['@type'] = ['MultiLevelSwitch'];
     this.name = deviceInfo.device_id;
+
+    this.powerProperty = new PowerProperty(this, yamaha);
+    this.properties.set(this.powerProperty.name, this.powerProperty);
 
     const zones = features.zone || [];
     const rangeSteps = findFirst(zone => zone.id == 'main', zones)?.range_step || [];
@@ -182,6 +215,7 @@ class YamahaDevice extends Device {
 
   private async poll() {
     const status = await this.yamaha.getStatus();
+    this.powerProperty.update(status);
     this.volumeProperty.update(status);
     this.inputProperty.update(status);
 

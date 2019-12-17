@@ -24,6 +24,10 @@ export class Yamaha {
         return this.get(`${zone}/getStatus`);
     }
 
+    public async setPower(power: "on" | "standby" | "toggle", zone: string = 'main'): Promise<Response> {
+        return this.get(`${zone}/setPower?power=${power}`);
+    }
+
     public async setVolume(volume: number, zone: string = 'main'): Promise<Response> {
         return this.get(`${zone}/setVolume?volume=${volume}`);
     }
@@ -193,7 +197,7 @@ export interface Ccs {
 
 export interface Status {
     response_code: number;
-    power: string;
+    power: "on" | "standby";
     sleep: number;
     volume: number;
     mute: boolean;
