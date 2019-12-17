@@ -33,8 +33,7 @@ class PowerProperty extends Property {
 
   public update(status: Status) {
     if (this.value !== status.power) {
-      this.setCachedValue(status.power == 'on');
-      this.device.notifyPropertyChanged(this);
+      this.setCachedValueAndNotify(status.power == 'on');
     }
   }
 }
@@ -65,8 +64,7 @@ class VolumeProperty extends Property {
 
   public update(status: Status) {
     if (this.value !== status.volume) {
-      this.setCachedValue(status.volume);
-      this.device.notifyPropertyChanged(this);
+      this.setCachedValueAndNotify(status.volume);
     }
   }
 }
@@ -94,14 +92,13 @@ class InputProperty extends Property {
 
   public update(status: Status) {
     if (this.value !== status.input) {
-      this.setCachedValue(status.input);
-      this.device.notifyPropertyChanged(this);
+      this.setCachedValueAndNotify(status.input);
     }
   }
 }
 
 class TrackProperty extends Property {
-  constructor(private device: Device) {
+  constructor(device: Device) {
     super(device, 'track', {
       type: 'string',
       title: 'track',
@@ -112,14 +109,13 @@ class TrackProperty extends Property {
 
   public update(playInfo: PlayInfo) {
     if (this.value !== playInfo.track) {
-      this.setCachedValue(playInfo.track);
-      this.device.notifyPropertyChanged(this);
+      this.setCachedValueAndNotify(playInfo.track);
     }
   }
 }
 
 class AlbumProperty extends Property {
-  constructor(private device: Device) {
+  constructor(device: Device) {
     super(device, 'album', {
       type: 'string',
       title: 'album',
@@ -130,14 +126,13 @@ class AlbumProperty extends Property {
 
   public update(playInfo: PlayInfo) {
     if (this.value !== playInfo.album) {
-      this.setCachedValue(playInfo.album);
-      this.device.notifyPropertyChanged(this);
+      this.setCachedValueAndNotify(playInfo.album);
     }
   }
 }
 
 class ArtistProperty extends Property {
-  constructor(private device: Device) {
+  constructor(device: Device) {
     super(device, 'artist', {
       type: 'string',
       title: 'artist',
@@ -148,8 +143,7 @@ class ArtistProperty extends Property {
 
   public update(playInfo: PlayInfo) {
     if (this.value !== playInfo.artist) {
-      this.setCachedValue(playInfo.artist);
-      this.device.notifyPropertyChanged(this);
+      this.setCachedValueAndNotify(playInfo.artist);
     }
   }
 }

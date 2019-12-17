@@ -25,6 +25,7 @@ declare module 'gateway-addon' {
         protected value: any;
         constructor(device: Device, name: string, propertyDescr: {});
         public setCachedValue(value: any): void;
+        public setCachedValueAndNotify(value: any): void;
         public setValue(value: any): Promise<void>
     }
 
